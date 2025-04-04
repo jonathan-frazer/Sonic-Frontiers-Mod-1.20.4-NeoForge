@@ -29,6 +29,9 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.sonicrushxii.beyondthehorizon.event_handlers.EquipmentChangeHandler;
+import net.sonicrushxii.beyondthehorizon.event_handlers.PlayerTickHandler;
+import net.sonicrushxii.beyondthehorizon.event_handlers.server.ServerWorldHandler;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -79,9 +82,10 @@ public class BeyondTheHorizon
         CREATIVE_MODE_TABS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
-        // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
-        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(PlayerTickHandler.class);
+        NeoForge.EVENT_BUS.register(EquipmentChangeHandler.class);
+        NeoForge.EVENT_BUS.register(ServerWorldHandler.class);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
